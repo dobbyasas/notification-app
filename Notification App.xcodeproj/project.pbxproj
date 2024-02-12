@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C22334C82B79DAA000572828 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22334C72B79DAA000572828 /* NotificationsViewModel.swift */; };
 		C2BC6E1A2B49B2C400BD8A58 /* Notification_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC6E192B49B2C400BD8A58 /* Notification_AppApp.swift */; };
 		C2BC6E1C2B49B2C400BD8A58 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC6E1B2B49B2C400BD8A58 /* ContentView.swift */; };
 		C2BC6E1E2B49B2C400BD8A58 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC6E1D2B49B2C400BD8A58 /* Item.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C22334C72B79DAA000572828 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		C2BC6E162B49B2C400BD8A58 /* Notification App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notification App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2BC6E192B49B2C400BD8A58 /* Notification_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification_AppApp.swift; sourceTree = "<group>"; };
 		C2BC6E1B2B49B2C400BD8A58 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				C2BC6E192B49B2C400BD8A58 /* Notification_AppApp.swift */,
 				C2BC6E1B2B49B2C400BD8A58 /* ContentView.swift */,
 				C2BC6E452B51232200BD8A58 /* AddNotificationView.swift */,
+				C22334C72B79DAA000572828 /* NotificationsViewModel.swift */,
 				C2BC6E1D2B49B2C400BD8A58 /* Item.swift */,
 				C2BC6E1F2B49B2C600BD8A58 /* Assets.xcassets */,
 				C2BC6E212B49B2C600BD8A58 /* Preview Content */,
@@ -264,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2BC6E1C2B49B2C400BD8A58 /* ContentView.swift in Sources */,
+				C22334C82B79DAA000572828 /* NotificationsViewModel.swift in Sources */,
 				C2BC6E1E2B49B2C400BD8A58 /* Item.swift in Sources */,
 				C2BC6E1A2B49B2C400BD8A58 /* Notification_AppApp.swift in Sources */,
 				C2BC6E462B51232200BD8A58 /* AddNotificationView.swift in Sources */,

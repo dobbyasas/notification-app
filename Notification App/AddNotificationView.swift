@@ -6,7 +6,7 @@ struct AddNotificationView: View {
     @State private var description: String = ""
     @State private var time = Date()
     @State private var daysOfWeek: [Bool] = Array(repeating: false, count: 7)
-    @State private var showingSuccessAlert = false
+    @State private var showingSuccessAlert = false // For showing success alert
 
     var body: some View {
         Form {
@@ -40,8 +40,11 @@ struct AddNotificationView: View {
 
     func addNotification() {
         let notification = NotificationData(name: name, description: description, time: time, daysOfWeek: daysOfWeek)
+        
         storeNotification(notification)
+        
         scheduleNotificationsForSelectedDays(notification)
+
         showingSuccessAlert = true
     }
 
