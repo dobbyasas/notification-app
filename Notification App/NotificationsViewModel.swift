@@ -1,13 +1,20 @@
 import Foundation
 import UserNotifications
 
-struct NotificationGroup {
+struct NotificationGroup: Identifiable {
+    var id: String { title + String(time.hashValue) }
     var title: String
-    var body: String
-    var identifiers: [String]
-    var times: [Date]
+    var time: Date
+    var days: String
 }
 
+
+struct GroupedNotification {
+    var id: String
+    var time: Date
+    var weekday: Int
+}
+    
 class NotificationsViewModel: ObservableObject {
     @Published var notificationGroups: [NotificationGroup] = []
     
@@ -20,32 +27,30 @@ class NotificationsViewModel: ObservableObject {
     }
     
     private func groupNotifications(_ requests: [UNNotificationRequest]) {
-        var groups: [String: NotificationGroup] = [:]
-        
+        var groups: [String: [GroupedNotification]] = [:]
+
         for request in requests {
-            let key = "\(request.content.title)\(request.content.body)"
-            if var group = groups[key] {
-                group.identifiers.append(request.identifier)
-                if let trigger = request.trigger as? UNCalendarNotificationTrigger,
-                   let date = trigger.nextTriggerDate() {
-                    group.times.append(date)
-                }
-                groups[key] = group
-            } else {
-                var times: [Date] = []
-                if let trigger = request.trigger as? UNCalendarNotificationTrigger,
-                   let date = trigger.nextTriggerDate() {
-                    times.append(date)
-                }
-                groups[key] = NotificationGroup(title: request.content.title, body: request.content.body, identifiers: [request.identifier], times: times)
+            let key = request.content.title
+            if let trigger = request.trigger as? UNCalendarNotificationTrigger,
+               let time = trigger.nextTriggerDate(),
+               let weekday = trigger.dateComponents.weekday {
+                let notification = GroupedNotification(id: request.identifier, time: time, weekday: weekday)
+                groups[key, default: []].append(notification)
             }
         }
-        
-        self.notificationGroups = Array(groups.values)
+
+        self.notificationGroups = groups.map { key, notifications in
+            let sortedNotifications = notifications.sorted { $0.weekday < $1.weekday }
+            let days = sortedNotifications.map { dayOfWeekString($0.weekday) }.joined(separator: ", ")
+            let time = sortedNotifications.first!.time
+            return NotificationGroup(title: key, time: time, days: days)
+        }
     }
+
+
     
-    func removeNotification(by identifier: String) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
-        fetchNotifications()
+    private func dayOfWeekString(_ weekday: Int) -> String {
+        let formatter = DateFormatter()
+        return formatter.weekdaySymbols[weekday - 1]
     }
 }
