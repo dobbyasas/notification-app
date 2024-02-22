@@ -8,13 +8,12 @@ struct NotificationGroup: Identifiable {
     var days: String
 }
 
-
 struct GroupedNotification {
     var id: String
     var time: Date
     var weekday: Int
 }
-    
+
 class NotificationsViewModel: ObservableObject {
     @Published var notificationGroups: [NotificationGroup] = []
     
@@ -46,11 +45,20 @@ class NotificationsViewModel: ObservableObject {
             return NotificationGroup(title: key, time: time, days: days)
         }
     }
+    
+    func deleteNotifications(at offsets: IndexSet) {
+        let idsToDelete = offsets.flatMap { index -> [String] in
+            let group = notificationGroups[index]
+            return group.id.components(separatedBy: CharacterSet.decimalDigits.inverted)
+        }
 
-
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: idsToDelete)
+        notificationGroups.remove(atOffsets: offsets)
+    }
     
     private func dayOfWeekString(_ weekday: Int) -> String {
         let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE" // Full weekday name
         return formatter.weekdaySymbols[weekday - 1]
     }
 }

@@ -5,22 +5,25 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            List(viewModel.notificationGroups) { group in
-                VStack(alignment: .leading) {
-                    Text(group.title).font(.headline)
-                    HStack {
-                        Text("Time: \(group.time, formatter: itemFormatter)").font(.subheadline)
-                        Spacer()
-                        Text(group.days).font(.subheadline)
+            List {
+                ForEach(viewModel.notificationGroups) { group in
+                    VStack(alignment: .leading) {
+                        Text(group.title).font(.headline)
+                        HStack {
+                            Text("Time: \(group.time, formatter: itemFormatter)").font(.subheadline)
+                            Spacer()
+                            Text(group.days).font(.subheadline)
+                        }
                     }
+                    .padding()
                 }
-                .padding()
+                .onDelete(perform: deleteItems)
             }
             .navigationTitle("Notifications")
             .onAppear {
                 viewModel.fetchNotifications()
             }
-            .navigationBarItems(trailing: NavigationLink(destination: AddNotificationView()) {
+            .navigationBarItems(trailing: NavigationLink(destination: Text("Add Notification View Placeholder")) {
                 Image(systemName: "plus")
             })
         }
@@ -30,5 +33,9 @@ struct ContentView: View {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         return formatter
+    }
+    
+    private func deleteItems(at offsets: IndexSet) {
+        viewModel.deleteNotifications(at: offsets)
     }
 }
